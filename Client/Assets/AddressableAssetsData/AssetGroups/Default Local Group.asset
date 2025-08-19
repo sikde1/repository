@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
   m_GUID: d37e843c3e854434e8912ada3f68cfe6
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: b644ea8dda46ddd4c88ff7eff7c27b4d
+    m_Address: Assets/Plugins
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 13d1d8f038aec544b8335befd30bc322, type: 2}
   m_SchemaSet:
