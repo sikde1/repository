@@ -1,9 +1,10 @@
-namespace Project.Data
+﻿namespace Project.Data
 {
     public enum DataType
     {
         UnitCharacter = 0,
-        UIPopup = 1
+        UIPopup = 1,
+        UnitMonster = 2,
         
         // 새로운 데이터 타입 추가 시:
         // 1. 여기에 열거형 값 추가

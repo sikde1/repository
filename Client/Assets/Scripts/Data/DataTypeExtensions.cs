@@ -1,4 +1,4 @@
-using Project.FlatBuffer;
+﻿using Project.FlatBuffer;
 using System;
 
 namespace Project.Data
@@ -17,6 +17,7 @@ namespace Project.Data
             {
                 DataType.UnitCharacter => "FBUnitCharacter",
                 DataType.UIPopup => "FBUIPopup",
+                DataType.UnitMonster => "FBUnitMonster",
                 _ => throw new ArgumentException($"Unknown DataType: {dataType}")
             };
         }
@@ -32,6 +33,7 @@ namespace Project.Data
             {
                 DataType.UnitCharacter => typeof(DataUnitCharacter),
                 DataType.UIPopup => typeof(DataUIPopup),
+                DataType.UnitMonster => typeof(DataUnitMonster),
                 _ => throw new ArgumentException($"Unknown DataType: {dataType}")
             };
         }
@@ -49,6 +51,7 @@ namespace Project.Data
             {
                 DataType.UnitCharacter => new DataUnitCharacter(),
                 DataType.UIPopup => new DataUIPopup(),
+                DataType.UnitMonster => new DataUnitMonster(),
                 _ => throw new ArgumentException($"Unknown DataType: {dataType}")
             };
         }

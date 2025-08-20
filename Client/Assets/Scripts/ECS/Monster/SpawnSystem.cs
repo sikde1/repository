@@ -1,17 +1,18 @@
 ﻿using Unity.Burst;
-using Unity.Collections;
 using Unity.Entities;
-using Unity.Mathematics;
 using Unity.Transforms;
-using static UnityEngine.EventSystems.EventTrigger;
 
 [UpdateInGroup(typeof(InitializationSystemGroup))]
+[UpdateAfter(typeof(WaveInitSystem))]
+[UpdateAfter(typeof(MonsterTableInitSystem))]
 partial struct SpawnSystem : ISystem
 {
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<ConfigData>();
+        state.RequireForUpdate<WaveData>();
+        state.RequireForUpdate<MonsterTable>();
     }
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
@@ -40,6 +41,31 @@ partial struct SpawnSystem : ISystem
         var entity = state.EntityManager.Instantiate(config.Prefab);
         var xform = SystemAPI.GetComponentRW<LocalTransform>(entity);
         xform.ValueRW = LocalTransform.FromPosition(config.SpawnPosition);
+
+        // 현재 웨이브 idx로 Blob에서 Speed 조회
+        var wave = SystemAPI.GetSingleton<WaveData>();
+        int idx = wave.CurrentMonsterIdx;
+
+        var table = SystemAPI.GetSingleton<MonsterTable>();
+        if (!table.Blob.IsCreated)
+            return;
+
+        ref var ids = ref table.Blob.Value.Ids;
+        ref var speeds = ref table.Blob.Value.Speeds;
+
+        float speed = 1f;
+        for (int i = 0; i < ids.Length; i++)
+        {
+            if (ids[i] == idx)
+            {
+                speed = speeds[i];
+                break;
+            }
+        }
+
+        var md = state.EntityManager.GetComponentData<MonsterData>(entity);
+        md.Speed = speed;
+        state.EntityManager.SetComponentData(entity, md);
     }
 
     [BurstCompile]
