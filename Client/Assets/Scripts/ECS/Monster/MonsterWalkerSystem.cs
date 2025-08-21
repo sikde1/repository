@@ -1,4 +1,4 @@
-using Unity.Burst;
+﻿using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -14,7 +14,8 @@ partial struct MonsterWalkerSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var config = SystemAPI.GetSingleton<ConfigData>();
+        if (!SystemAPI.TryGetSingleton<ConfigData>(out var config))
+            return;
 
         var job = new MonsterWalkerJob
         {
